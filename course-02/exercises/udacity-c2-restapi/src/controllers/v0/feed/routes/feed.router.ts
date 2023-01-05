@@ -59,14 +59,10 @@ router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
       }
     );
 
-    console.log(feed);
-
     return res.send(feed);
   } catch (e) {
     return res.status(400).send({ message: e.message });
   }
-
-  res.status(500).send("not implemented");
 });
 
 // Get a signed url to put a new item in the bucket
@@ -108,6 +104,10 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
 
   saved_item.url = AWS.getGetSignedUrl(saved_item.url);
   res.status(201).send(saved_item);
+});
+
+router.get('/filter-image', async (req: Request, res: Response) => {
+  const { image_url } = req.query;
 });
 
 export const FeedRouter: Router = router;
